@@ -1926,6 +1926,31 @@ const DEFAULT_NAME = 'LGD 원정대원';
   window.addEventListener('pageshow', e => { if (e.persisted) { if (boarded) unboard(); nameIn.value = ''; setName(''); go(0); } });
 })();
 </script>
+<!-- Google Analytics: page_view, boarding_complete, ticket_save, last_page -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-K3PG6RLEXK"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){ dataLayer.push(arguments); }
+gtag('js', new Date());
+gtag('config', 'G-K3PG6RLEXK', { allow_google_signals: false, allow_ad_personalization_signals: false });
+(function () {
+  var sent = {};
+  function once(name) { if (sent[name]) return; sent[name] = 1; try { gtag('event', name); } catch (e) {} }
+  function watch(el, cls, name) {
+    if (!el) return;
+    var check = function () { if (el.classList.contains(cls)) once(name); };
+    new MutationObserver(check).observe(el, { attributes: true, attributeFilter: ['class'] });
+    check();
+  }
+  watch(document.getElementById('pass'), 'boarded', 'boarding_complete');
+  watch(document.querySelector('.s-close'), 'is-active', 'last_page');
+  document.addEventListener('click', function (e) {
+    var t = e.target;
+    if (t && t.closest && t.closest('.keep')) once('ticket_save');
+  }, true);
+})();
+</script>
+<!-- End Google Analytics -->
 <!-- Cloudflare Web Analytics --><script type='module' src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "52fff85552be4e58b2d13b644b85715c", "spa": false}'></script><!-- End Cloudflare Web Analytics -->
 </body>
 </html>
